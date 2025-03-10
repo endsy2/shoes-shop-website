@@ -1,23 +1,19 @@
 import { Module } from '@nestjs/common';
-import { AdminService } from './admin.service';
-import { AdminController } from './admin.controller';
 import { PrismaModule } from 'src/prisma/prisma.module';
 
-// import { CommonService } from 'src/common/common.service';
-import { FileUploadModule } from 'src/file-upload/file-upload.module';
-import { FileUploadService } from 'src/file-upload/file-upload.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ProductService } from './service/product/product.service';
 import { OrderService } from './service/order/order.service';
 import { DiscountService } from './service/discount/discount.service';
 import { SharedService } from 'src/shared/shared.service';
+import { ProductController } from './Controller/product/product.controller';
+import { OrderController } from './Controller/order/order.controller';
+import { DiscountController } from './Controller/discount/discount.controller';
 
 @Module({
   imports: [],
-  controllers: [AdminController],
+  controllers: [ProductController, OrderController, DiscountController],
   providers: [
-    AdminService,
-    FileUploadService,
     PrismaService,
     ProductService,
     OrderService,

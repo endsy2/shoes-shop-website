@@ -8,24 +8,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AdminModule = void 0;
 const common_1 = require("@nestjs/common");
-const admin_service_1 = require("./admin.service");
-const admin_controller_1 = require("./admin.controller");
-const file_upload_service_1 = require("../file-upload/file-upload.service");
 const prisma_service_1 = require("../prisma/prisma.service");
 const product_service_1 = require("./service/product/product.service");
 const order_service_1 = require("./service/order/order.service");
 const discount_service_1 = require("./service/discount/discount.service");
 const shared_service_1 = require("../shared/shared.service");
+const product_controller_1 = require("./Controller/product/product.controller");
+const order_controller_1 = require("./Controller/order/order.controller");
+const discount_controller_1 = require("./Controller/discount/discount.controller");
 let AdminModule = class AdminModule {
 };
 exports.AdminModule = AdminModule;
 exports.AdminModule = AdminModule = __decorate([
     (0, common_1.Module)({
         imports: [],
-        controllers: [admin_controller_1.AdminController],
+        controllers: [product_controller_1.ProductController, order_controller_1.OrderController, discount_controller_1.DiscountController],
         providers: [
-            admin_service_1.AdminService,
-            file_upload_service_1.FileUploadService,
             prisma_service_1.PrismaService,
             product_service_1.ProductService,
             order_service_1.OrderService,

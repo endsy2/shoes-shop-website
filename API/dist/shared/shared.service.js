@@ -20,11 +20,18 @@ let SharedService = class SharedService {
         return this.prisma.product.findMany({
             include: {
                 brand: true,
+<<<<<<< HEAD
                 discount: true,
                 productVariants: true,
                 productimage: {
                     select: {
                         imageUrl: true,
+=======
+                productVariants: {
+                    include: {
+                        discount: true,
+                        productimage: true
+>>>>>>> f48e9016a1586a8d6b4542a6ba8b555a7a5f2d0e
                     },
                 },
             },
@@ -34,11 +41,18 @@ let SharedService = class SharedService {
         const product = await this.prisma.product.findUnique({
             include: {
                 brand: true,
+<<<<<<< HEAD
                 discount: true,
                 productVariants: true,
                 productimage: {
                     select: {
                         imageUrl: true,
+=======
+                productVariants: {
+                    include: {
+                        discount: true,
+                        productimage: true
+>>>>>>> f48e9016a1586a8d6b4542a6ba8b555a7a5f2d0e
                     },
                 },
             },
@@ -49,6 +63,7 @@ let SharedService = class SharedService {
         }
         return product;
     }
+<<<<<<< HEAD
     async displayProductByName(name) {
         const product = await this.prisma.product.findMany({
             include: {
@@ -58,6 +73,21 @@ let SharedService = class SharedService {
                 productimage: {
                     select: {
                         imageUrl: true,
+=======
+    async displayProductByName({ name }) {
+        try {
+            if (!name) {
+                throw new Error('something went wrong');
+            }
+            const product = await this.prisma.product.findMany({
+                include: {
+                    brand: true,
+                    productVariants: {
+                        include: {
+                            discount: true,
+                            productimage: true
+                        },
+>>>>>>> f48e9016a1586a8d6b4542a6ba8b555a7a5f2d0e
                     },
                 },
             },
@@ -71,6 +101,159 @@ let SharedService = class SharedService {
     async getCategory() {
         return this.prisma.category.findMany();
     }
+<<<<<<< HEAD
+=======
+    async getProductByCategory({ categoryName }) {
+        try {
+            const category = await this.prisma.category.findUnique({
+                where: {
+                    name: categoryName,
+                },
+                select: {
+                    id: true,
+                },
+            });
+            if (!category) {
+                throw new Error('Category not found');
+            }
+            const products = await this.prisma.product.findMany({
+                where: {
+                    categoryId: category.id,
+                },
+                include: {
+                    brand: true,
+                    productVariants: {
+                        include: {
+                            discount: true,
+                            productimage: true
+                        },
+                    },
+                },
+            });
+            return products;
+        }
+        catch (error) {
+            console.error('Error fetching products by category:', error);
+            throw error;
+        }
+    }
+    async getSortPrice({ min, max }) {
+        try {
+            const products = await this.prisma.product.findMany({
+                include: {
+                    productVariants: {
+                        include: {
+                            discount: true,
+                        },
+                    },
+                },
+                where: {
+                    OR: [
+                        {
+                            productVariants: {
+                                some: {
+                                    discount: {
+                                        some: {
+                                            value: {
+                                                gte: min,
+                                                lte: max,
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                        {
+                            productVariants: {
+                                some: {
+                                    price: {
+                                        gte: min,
+                                        lte: max,
+                                    },
+                                },
+                            },
+                        },
+                    ],
+                },
+            });
+            return products.map((product) => {
+                let price = null;
+                const variantPrices = product.productVariants.map((variant) => {
+                    if (variant.discount.length > 0) {
+                        return variant.discount[0].value;
+                    }
+                    return variant.price;
+                });
+                if (variantPrices.length > 0) {
+                    price = Math.min(...variantPrices);
+                }
+                return {
+                    ...product,
+                    finalPrice: price,
+                };
+            });
+        }
+        catch (error) {
+            console.error('Error fetching sorted products:', error);
+            throw error;
+        }
+    }
+    async getDiscountedProducts() {
+        try {
+            const productsWithDiscounts = await this.prisma.productVariants.findMany({
+                where: {
+                    discount: {
+                        some: {
+                            startDate: { lte: new Date() },
+                            endDate: { gte: new Date() }
+                        }
+                    }
+                },
+                include: {
+                    product_fk: true,
+                    discount: true
+                }
+            });
+            return productsWithDiscounts;
+        }
+        catch (error) {
+            console.error('Error fetching discounted products:', error);
+        }
+        finally {
+            await this.prisma.$disconnect();
+        }
+    }
+    async getOrderByCustomerName(firstName, lastName) {
+        try {
+            if (!firstName || !lastName) {
+                throw new Error("First name and last name are required.");
+            }
+            const customer_row = await this.prisma.customer.findFirst({
+                where: { firstName, lastName }
+            });
+            if (!customer_row) {
+                throw new Error("Customer not found");
+            }
+            const orders = await this.prisma.order.findMany({
+                where: { customerId: customer_row.id },
+                include: {
+                    orderitem: {
+                        include: {
+                            productVariant: {
+                                include: { product_fk: true }
+                            }
+                        }
+                    }
+                }
+            });
+            return orders;
+        }
+        catch (error) {
+            console.error("Error fetching orders:", error);
+            throw new Error(`Something went wrong: ${error}`);
+        }
+    }
+>>>>>>> f48e9016a1586a8d6b4542a6ba8b555a7a5f2d0e
 };
 exports.SharedService = SharedService;
 exports.SharedService = SharedService = __decorate([

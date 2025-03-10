@@ -8,9 +8,106 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
 const common_1 = require("@nestjs/common");
+<<<<<<< HEAD
 let UserController = class UserController {
 };
 exports.UserController = UserController;
+=======
+const shared_service_1 = require("../shared/shared.service");
+const user_service_1 = require("./user.service");
+const CreateOrder_dto_1 = require("./dto/CreateOrder.dto");
+let UserController = class UserController {
+    constructor(shareService, userService) {
+        this.shareService = shareService;
+        this.userService = userService;
+    }
+    async displayAllProduct() {
+        return this.shareService.displayProduct();
+    }
+    async displayProductByName(name) {
+        return this.shareService.displayProductByName({ name });
+    }
+    async displayProductByCategory(category) {
+        return this.shareService.getProductByCategory({ categoryName: category });
+    }
+    async displayProductBySortPrice(max, min) {
+        console.log(`Max: ${max}, Min: ${min}`);
+        return this.shareService.getSortPrice({ max, min });
+    }
+    async displayProductByID(id) {
+        return this.shareService.displayProductByID(id);
+    }
+    async displayProductDiscount() {
+        return this.shareService.getDiscountedProducts();
+    }
+    async checkout(createOrderDTO) {
+        try {
+            return this.userService.checkout(createOrderDTO);
+        }
+        catch (error) {
+            throw new Error("something went wrong");
+        }
+    }
+    async displayDiscount() {
+        return this.shareService.getDiscountedProducts();
+    }
+};
+exports.UserController = UserController;
+__decorate([
+    (0, common_1.Get)('displayProductAll'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "displayAllProduct", null);
+__decorate([
+    (0, common_1.Get)('displayProductBy/name'),
+    __param(0, (0, common_1.Query)('name')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "displayProductByName", null);
+__decorate([
+    (0, common_1.Get)('displayProduct/category'),
+    __param(0, (0, common_1.Query)('category')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "displayProductByCategory", null);
+__decorate([
+    (0, common_1.Get)('displayProduct/sort'),
+    __param(0, (0, common_1.Query)('max', common_1.ParseIntPipe)),
+    __param(1, (0, common_1.Query)('min', common_1.ParseIntPipe)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Number]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "displayProductBySortPrice", null);
+__decorate([
+    (0, common_1.Get)('displayProductByID/:id'),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "displayProductByID", null);
+__decorate([
+    (0, common_1.Get)("displayProductDiscount"),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "displayProductDiscount", null);
+__decorate([
+    (0, common_1.Post)('checkout'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [CreateOrder_dto_1.CreateOrderDTO]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "checkout", null);
+__decorate([
+    (0, common_1.Get)('displayDiscount'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "displayDiscount", null);
+>>>>>>> f48e9016a1586a8d6b4542a6ba8b555a7a5f2d0e
 exports.UserController = UserController = __decorate([
     (0, common_1.Controller)('user')
 ], UserController);
