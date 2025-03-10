@@ -22,14 +22,11 @@ let OrderService = class OrderService {
                 include: {
                     orderitem: {
                         include: {
-                            productVariant: {
+                            product: {
                                 include: {
-                                    product_fk: {
-                                        include: {
-                                            brand: true,
-                                            category: true,
-                                        },
-                                    },
+                                    brand: true,
+                                    productVariants: true,
+                                    category: true,
                                 },
                             },
                         },
@@ -48,15 +45,11 @@ let OrderService = class OrderService {
                 include: {
                     orderitem: {
                         include: {
-                            productVariant: {
+                            product: {
                                 include: {
-                                    product_fk: {
-                                        include: {
-                                            brand: true,
-                                            productVariants: true,
-                                            category: true,
-                                        },
-                                    },
+                                    brand: true,
+                                    productVariants: true,
+                                    category: true,
                                 },
                             },
                         },

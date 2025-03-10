@@ -3,7 +3,7 @@ import { slider1, sliderLetter } from '../assets'
 const Sliders = () => {
     return (
         <div
-            className='rounded-b-2xl'
+            className=''
             style={{
                 backgroundImage: `url(${slider1})`, backgroundSize: 'cover',
                 backgroundPosition: 'center', width: '100%', height: '570px',

@@ -92,7 +92,7 @@ const Home = () => {
             <Slider key={windowWidth} {...settings}>
               {productCart.map((element, index) => (
                 <div key={index} className="py-3">
-                  <ShoesCard productName={element.name} productPrice={element.price} productImage={element.pic} />
+                  <ShoesCard productId={element.id} productName={element.name} productPrice={element.price} productImage={element.pic} />
                 </div>
               ))}
             </Slider>
@@ -107,9 +107,9 @@ const Home = () => {
         <div className="slider-container w-full max-w-full  overflow-hidden relative">
           <section className="py-4 ">
             <Slider key={windowWidth} {...settings}>
-              {productCart.map((element, index) => (
-                <div key={index} className="py-3">
-                  <ShoesCard productName={element.name} productPrice={element.price} productImage={element.pic} />
+              {productCart.map((element) => (
+                <div key={element.id} className="py-3">
+                  <ShoesCard productId={element.id} productName={element.name} productPrice={element.price} productImage={element.pic} />
                 </div>
               ))}
             </Slider>

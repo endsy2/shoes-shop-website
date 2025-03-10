@@ -6,15 +6,7 @@ export declare class ProductService {
         id: number;
         name: string;
         brandId: number;
-        categoryId: number;
-        createdAt: Date;
-        Description: string;
-    }>;
-    updateProduct(updateProductDTO: any, images: any, oldname: any, oldColor: any): Promise<{
-        id: number;
-        name: string;
-        brandId: number;
-        categoryId: number;
+        categoryID: number;
         createdAt: Date;
         Description: string;
     }>;
@@ -30,10 +22,9 @@ export declare class ProductService {
     }>;
     insertVariant(insertVariantDTO: any): Promise<{
         id: number;
-        productId: number;
         color: string;
-        size: string;
         price: number;
+        product_id: number;
     }>;
     uploadProductName(): Promise<void>;
 }

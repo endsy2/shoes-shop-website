@@ -8,6 +8,7 @@ import { toggleStatusTab } from "../store/cart"; // Import the toggleStatusTab a
 import { useThemeContext } from "../Context/ThemeContext";
 import { IoPersonOutline, IoPersonSharp } from "react-icons/io5";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { RxHamburgerMenu } from "react-icons/rx";
 
 const NavBar = () => {
   const [totalQuatity, setTotalQuantity] = useState(0);
@@ -41,16 +42,11 @@ const NavBar = () => {
     <nav className={`flex-col w-full  `}>
       <section className="flex justify-around md:justify-between items-center py-7 w-full ">
         <div className="flex md:justify-start justify-end max-md:w-1/2">
-          <button onClick={() => setToggleMenu(!toggleMenu)}>
-            <img
-              src={hamburgerBar}
-              alt="hamburger"
-              className="block lg:hidden w-8 ml-3"
-            />
-          </button>
-          <NavLink to="/" className="text-[white] px-10">
+          <NavLink to="/" className="text-[white] ">
             <img src={logo} alt="logo" className="w-40" />
           </NavLink>
+
+
         </div>
         <div className="flex justify-end items-center">
           <input
@@ -58,7 +54,7 @@ const NavBar = () => {
             placeholder="Search"
             className="border border-black rounded-md px-5 py-1 w-56 mr-8 h-9 max-md:hidden"
           />
-          <div className="flex gap-7 items-center max-md:justify-end">
+          <div className="gap-7 items-center hidden lg:flex">
             {nav_icon.map((element) => (
               element.label === "AddToCart" ? (
                 <div
@@ -110,20 +106,23 @@ const NavBar = () => {
               </NavLink>
             ))}
           </div>
+          <button onClick={() => setToggleMenu(!toggleMenu)}>
+            <p className="block lg:hidden w-8 ml-3"> <RxHamburgerMenu /></p>
+          </button>
         </div>
         <div
-          className={`fixed inset-0 z-40 flex flex-col bg-gray-800 bg-opacity-50 lg:hidden transition-transform transform ${toggleMenu ? "translate-x-0" : "translate-x-full"}`}
+          className={`fixed inset-0 z-40 flex bg-gray-800 bg-opacity-50 lg:hidden transition-transform transform ${toggleMenu ? "translate-x-0" : "-translate-x-full"}`}
           onClick={() => setToggleMenu(false)}
         >
           <div
-            className="w-64 bg-[white] h-full shadow-lg"
+            className="w-64 bg-white h-full shadow-lg"
             onClick={(e) => e.stopPropagation()}
           >
-            <nav>hi</nav>
+            <nav className="p-4">hi</nav>
           </div>
         </div>
       </section>
-      <section className="dark:bg-lightGray bg-primary w-full h-20 rounded-t-2xl">
+      <section className="dark:bg-lightGray bg-primary w-full h-20">
         <ol className="flex justify-start md:justify-center items-center w-full h-full gap-16 px-4  text-xl overflow-x-scroll md:overflow-x-hidden overflow-y-hidden whitespace-nowrap scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 snap-x snap-mandatory">
           {menubar.map(({ label, items }) => (
             <li key={label} className="relative text-black text-main-light font-bold group flex-shrink-0 snap-center">
